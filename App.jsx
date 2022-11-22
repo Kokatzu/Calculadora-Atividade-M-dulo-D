@@ -25,23 +25,27 @@ export default function App() {
         setCurrentNumber((fistNumber - lastNumber).toString())
         return
       case 'x':
-        setCurrentNumber((fistNumber + lastNumber).toString())
+        setCurrentNumber((fistNumber * lastNumber).toString())
         return
       case '/':
-        setCurrentNumber((fistNumber - lastNumber).toString())
+        setCurrentNumber((fistNumber / lastNumber).toString())
         return
+      case '%':
+        setCurrentNumber((fistNumber / "100").toString())
+        return
+
     }
   }
 
   function handleInput(buttonPressed) {
     console.log(buttonPressed) // Mostra no Console a tecla pressionada
-    if (buttonPressed === '+' | buttonPressed === "-" | buttonPressed === "x" | buttonPressed === "/") {
+    if (buttonPressed === '+' | buttonPressed === "-" | buttonPressed === "x" | buttonPressed === "/" | buttonPressed === "%") {
       setCurrentNumber(currentNumber + " " + buttonPressed + " ")
       return
     }
     switch (buttonPressed) {
       case 'DEL':
-        setCurrentNumber(currentNumber.substring(0, (currentNumber.length - 2)))
+        setCurrentNumber(currentNumber.substring(0, (currentNumber.length - 1)))
         return
       case 'LIMPAR': // Limpa todo o conteúdo
         setLastNumber("")
@@ -52,7 +56,9 @@ export default function App() {
         calculator()
         return
       case '+/-':
+       setCurrentNumber(currentNumber * -1)
         return
+
     }
 
     setCurrentNumber(currentNumber + buttonPressed)
@@ -73,14 +79,14 @@ export default function App() {
             {buttons.map((button) =>
               button === '=' ? // Mapeamento do botão =
 
-                <TouchableOpacity onPress={() => handleInput(button)} key={button} style={[styles.button, { backgroundColor: '#3dd0e3' }]}>
+                <TouchableOpacity onPress={() => handleInput(button)} key={button} style={[styles.button, { backgroundColor: '#271840' }]}>
                   <Text style={[styles.textButton, { color: "white", fontSize: 30 }]}>{button}</Text>
                 </TouchableOpacity>
 
                 : // Mapeamento dos outros botões
 
                 <TouchableOpacity onPress={() => handleInput(button)} key={button} style={styles.button}>
-                  <Text style={[styles.textButton, { color: typeof (button) === 'number' ? 'black' : '#0093a6' }]}>{button}</Text>
+                  <Text style={[styles.textButton, { color: typeof (button) === 'number' ? 'white' : 'grey' }]}>{button}</Text>
                 </TouchableOpacity>
 
             )}
@@ -100,11 +106,11 @@ const styles = new StyleSheet.create({
   results: {
     flex: 1,
     justifyContent: "center",
-    backgroundColor: "#f5f5f5"
+    backgroundColor: '#271840'
   },
 
   resultText: {
-    color: "#282F38",
+    color: "white",
     fontSize: 32,
     fontWeight: "bold",
     padding: 12,
@@ -125,7 +131,7 @@ const styles = new StyleSheet.create({
   },
 
   button: {
-    backgroundColor: 'white',
+    backgroundColor: '#38176e',
     alignItems: 'center',
     justifyContent: 'center',
     minWidth: 100,
@@ -134,7 +140,7 @@ const styles = new StyleSheet.create({
   },
 
   textButton: {
-    color: "#7c7c7c",
+    color: '#7c7c7c',
     fontSize: 20,
   }
 });
